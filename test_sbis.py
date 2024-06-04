@@ -8,7 +8,7 @@ from pages.tensor_ru_about_ import tensor_about_ru as Tensor_ru_about
 
 browser = webdriver.Chrome()
 
-def tet_first_script():
+def test_first_script():
     sbis_ru = Sbis_ru(browser)
     sbis_ru.open()
     sbis_ru.click_contact()

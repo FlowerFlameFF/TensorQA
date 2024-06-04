@@ -7,7 +7,7 @@ block4_about_selector = (By.CSS_SELECTOR, 'a[href="/about"]')
 class tensor_ru(base_page):
     def __init__(self, browser):
         super().__init__(browser)
-        self.url = 'https://tensor.ru/'
+        self.url = 'https://tensor.ru'
 
     def click_block4_about(self):
         blocl4_about = self.find_element(block4_selector).find_element(*block4_about_selector)

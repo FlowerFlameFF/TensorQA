@@ -19,7 +19,7 @@ region_dictionary = {
 class sbis_contact(base_page):
     def __init__(self, browser):
         super().__init__(browser)
-        self.url = 'https://sbis.ru/contacts/'
+        self.url = 'https://sbis.ru/contacts'
 
     def click_tensor_banner(self):
         tensor_banner = self.find_element(tensor_banner_locator)
