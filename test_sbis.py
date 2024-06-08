@@ -1,10 +1,16 @@
+import os
+import re
+import math
 import pytest
+from requests import get as requests_get
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from time import sleep
 from pages.sbis_ru import sbis_ru as Sbis_ru
 from pages.sbis_ru_contact import sbis_contact as Sbis_ru_contact
 from pages.tensor_ru import tensor_ru as Tensor_ru
 from pages.tensor_ru_about_ import tensor_about_ru as Tensor_ru_about
+from pages.sbis_ru_download import sbis_ru_download as Sbis_ru_download
 
 browser = webdriver.Chrome()
 
@@ -35,7 +41,6 @@ def test_second_script():
     sbis_ru = Sbis_ru(browser)
     sbis_ru.open()
     sbis_ru.click_contact()
-
     print(browser.current_url)
 
     sbis_ru_contact = Sbis_ru_contact(browser)
@@ -58,3 +63,29 @@ def test_second_script():
     if old_city == sbis_ru_contact.get_city_id_2():
         assert False, 'Список партнёров не обновился'
     assert True
+
+def test_three_script():
+    sbis_ru = Sbis_ru(browser)
+    sbis_ru.open()
+    sbis_ru.click_download_local_versions()
+
+    sbis_ru_download = Sbis_ru_download(browser)
+    sbis_ru_download.choice_sbisplugin()
+
+    sleep(2)
+
+    link = sbis_ru_download.get_web_setup_plugin_url()
+
+    response = requests_get(link)
+    response.raise_for_status()
+
+    size = sbis_ru_download.get_size_sbisplugin()
+
+    with open(file='sbis.exe', mode='wb') as file:
+        file.write(response.content)
+        file_size = round(os.path.getsize('sbis.exe') / 1024 / 1024, 2)
+
+        if size == file_size:
+            assert True
+        else:
+            assert False, "Размеры не совпадают! Фактический размер - " + str(file_size) + " из " + str(size)
