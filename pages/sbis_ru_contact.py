@@ -33,8 +33,6 @@ class sbis_contact(base_page):
     def check_region_in_title(self, region_id):
         try:
             region_title = region_dictionary[region_id]['full_title']
-            print(self.browser.title.title())
-            print(self.browser.title.title().index(region_title))
             self.browser.title.title().index(region_title)
             return True
         except:
@@ -43,9 +41,7 @@ class sbis_contact(base_page):
     def check_region_in_url(self, region_id):
         try:
             region_title = region_dictionary[region_id]['translate_title']
-            print(self.browser.current_url)
             self.browser.current_url.index(region_title)
-
             return True
         except:
             return False
